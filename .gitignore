@@ -1,0 +1,4 @@
+__pycache__/
+librispeech_log_dir/
+librispeech_ckpt_model_dir/
+LibriSpeech/
