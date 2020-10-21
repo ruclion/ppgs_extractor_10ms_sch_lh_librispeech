@@ -20,11 +20,14 @@ def get_single_data_pair(fname, mfcc_dir, ppg_dir):
     mfcc_f = os.path.join(os.path.join(os.path.join(mfcc_dir, fname.split('-')[0]),fname.split('-')[1]),fname+'.npy')#fname+'.npy')
     ppg_f = os.path.join(os.path.join(os.path.join(ppg_dir, fname.split('-')[0]),fname.split('-')[1]),fname+'.npy')#os.path.join(ppg_dir, fname+'.npy')
 
-    mfcc = np.load(mfcc_f)
-    ppg = np.load(ppg_f)
-    ppg = onehot(ppg, depth=PPG_DIM)
-    if mfcc.shape[0] != ppg.shape[0]:
-        print(fname, '---', mfcc.shape[0], ppg.shape[0])
+    try:
+        mfcc = np.load(mfcc_f)
+        ppg = np.load(ppg_f)
+        ppg = onehot(ppg, depth=PPG_DIM)
+        if mfcc.shape[0] != ppg.shape[0]:
+            # print(fname, '---', mfcc.shape[0], ppg.shape[0])
+            return False
+    except:
         return False
     return mfcc, ppg
 
@@ -32,13 +35,26 @@ def get_single_data_pair(fname, mfcc_dir, ppg_dir):
 
 if __name__ == '__main__':
     f = open('meta_960.txt')
-    fout = open('same_meta_960.txt', 'w')
-    fdif = open('diff_meta_960.txt', 'w')
+    
     a = [i.strip() for i in f]
-    for x in a:
+    dif_list = []
+    out_list = []
+    for i, x in enumerate(a): 
         tag = get_single_data_pair(x, './MFCCs', './PPGs')
         if tag is False:
-            fout.write(x + '\n')
+            dif_list.append(x)
+            # fdif.write(x + '\n')
         else:
-            print(x)
-            fdif.write(x + '\n')
+            # print(x)
+            out_list.append(x)
+            # fout.write(x + '\n')
+        if i % 1000 == 0:
+            print('----:', i)
+
+    print('check over, start write:')
+    fout = open('same_meta_960_v2.txt', 'w')
+    fdif = open('diff_meta_960_v2.txt', 'w')
+    for x in out_list:
+        fout.write(x + '\n')
+    for x in dif_list:
+        fdif.write(x + '\n')

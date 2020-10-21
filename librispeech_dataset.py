@@ -59,35 +59,35 @@ def test_generator():
         yield mfcc, ppg, mfcc.shape[0]#mfcc数目不固定（帧数目不同）
 
 
-def tf_dataset():
-    import tensorflow as tf
-    batch_size = 128
-    train_set = tf.data.Dataset.from_generator(train_generator,
-                                               output_types=(
-                                                   tf.float32, tf.float32, tf.int32),
-                                               output_shapes=(
-                                                   [None, MFCC_DIM], [None, PPG_DIM], []))#[]代表输出一个数，不能加数字
-    # 用padded_batch: the input elements to be batched may have different shape
-    # 但是需要考虑要不要sort train.txt的文件，按照none排序
-    train_set = train_set.padded_batch(batch_size,#会自动给数据加一维，batch_size大小。然后把每个data组的东西添加进去
-                                       padded_shapes=([None, MFCC_DIM],
-                                                      [None, PPG_DIM],#表示在批处理之前每个输入元素的各个组件应填充到的形状。None表示在这一维度上填充至这维度最大的值
-                                                      [])).repeat()#第三个是[]，因为每个data第三个是常数，一个batch会变成(batchsize,)的形状，不需要填充。
+# def tf_dataset():
+#     import tensorflow as tf
+#     batch_size = 128
+#     train_set = tf.data.Dataset.from_generator(train_generator,
+#                                                output_types=(
+#                                                    tf.float32, tf.float32, tf.int32),
+#                                                output_shapes=(
+#                                                    [None, MFCC_DIM], [None, PPG_DIM], []))#[]代表输出一个数，不能加数字
+#     # 用padded_batch: the input elements to be batched may have different shape
+#     # 但是需要考虑要不要sort train.txt的文件，按照none排序
+#     train_set = train_set.padded_batch(batch_size,#会自动给数据加一维，batch_size大小。然后把每个data组的东西添加进去
+#                                        padded_shapes=([None, MFCC_DIM],
+#                                                       [None, PPG_DIM],#表示在批处理之前每个输入元素的各个组件应填充到的形状。None表示在这一维度上填充至这维度最大的值
+#                                                       [])).repeat()#第三个是[]，因为每个data第三个是常数，一个batch会变成(batchsize,)的形状，不需要填充。
     
-    train_iterator = train_set.make_initializable_iterator()
-    batch_data = train_iterator.get_next()
+#     train_iterator = train_set.make_initializable_iterator()
+#     batch_data = train_iterator.get_next()
 
-    with tf.Session() as sess:
-        sess.run(train_iterator.initializer)#
-        for i in range(10):
-            data = sess.run(batch_data)#从迭代器取一值
-            print(data[0].shape, data[1].shape, data[2].shape)
-    return
+#     with tf.Session() as sess:
+#         sess.run(train_iterator.initializer)#
+#         for i in range(10):
+#             data = sess.run(batch_data)#从迭代器取一值
+#             print(data[0].shape, data[1].shape, data[2].shape)
+#     return
 
 
-if __name__ == '__main__':
-    tf_dataset()
-    # file_list = text2list(file=TEST_FILE)
-    # for f in file_list:
-    #     mfcc, ppg = get_single_data_pair(f, mfcc_dir=MFCC_DIR, ppg_dir=PPG_DIR)
-    #     print(mfcc.shape, ppg.shape)
+# if __name__ == '__main__':
+#     tf_dataset()
+#     # file_list = text2list(file=TEST_FILE)
+#     # for f in file_list:
+#     #     mfcc, ppg = get_single_data_pair(f, mfcc_dir=MFCC_DIR, ppg_dir=PPG_DIR)
+#     #     print(mfcc.shape, ppg.shape)

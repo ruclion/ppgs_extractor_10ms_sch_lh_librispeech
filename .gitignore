@@ -1,6 +1,11 @@
 __pycache__/
+*__pycache__*
 librispeech_log_dir/
 librispeech_ckpt_model_dir/
-LibriSpeech/
-librispeech_ckpt_model_dir_last_backup/
-librispeech_log_dir_last_backup/
+librispeech_ckpt_model_dir_new_bp/
+librispeech_log_dir_new_bp/
+LibriSpeech/alignments
+LibriSpeech/PPGs
+LibriSpeech/MFCCs
+LibriSpeech/wavs_16000_960
+*.txt

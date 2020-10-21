@@ -1,18 +1,23 @@
-import tensorflow as tf
-from datetime import datetime
-import time
 import os
 import sys
+import time
 import numpy as np
-from models import CnnDnnClassifier, DNNClassifier, CNNBLSTMCalssifier
+import tensorflow as tf
+from datetime import datetime
+
+from models import CNNBLSTMCalssifier
 from librispeech_dataset import train_generator, test_generator
 
 # some super parameters
+reuse_log = True
 BATCH_SIZE = 64
 # BATCH_SIZE = 16
 STEPS = int(5e5)
 LEARNING_RATE = 0.3
-STARTED_DATESTRING = "{0:%Y-%m-%dT%H-%M-%S}".format(datetime.now())
+if reuse_log:
+    STARTED_DATESTRING = '2020-09-21T12-38-11'
+else:
+    STARTED_DATESTRING = "{0:%Y-%m-%dT%H-%M-%S}".format(datetime.now())
 MAX_TO_SAVE = 20
 CKPT_EVERY = 1000
 MFCC_DIM = 39
