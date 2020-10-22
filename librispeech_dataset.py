@@ -4,8 +4,8 @@ import time
 
 #生成数据的代码
 #train/test每一行都只是一个文件名
-TRAIN_FILE = './LibriSpeech/train_diff_meta_960.txt'#'/media/luhui/experiments_data/librispeech/train.txt'
-TEST_FILE = './LibriSpeech/test_diff_meta_960.txt'#'/media/luhui/experiments_data/librispeech/dev.txt'
+TRAIN_FILE = './LibriSpeech/train_same_meta_960_v2.txt'#'/media/luhui/experiments_data/librispeech/train.txt'
+TEST_FILE = './LibriSpeech/test_same_meta_960_v2.txt'#'/media/luhui/experiments_data/librispeech/dev.txt'
 MFCC_DIR =  './LibriSpeech/MFCCs'      #'/media/luhui/experiments_data/librispeech/mfcc_hop12.5'#生成MFCC的目录
 PPG_DIR =   './LibriSpeech/PPGs'   #'/media/luhui/experiments_data/librispeech/phone_labels_hop12.5'
 MFCC_DIM = 39

@@ -170,45 +170,36 @@ def main():
         raise
 
     last_saved_step = saved_global_step
-    step = None
-    try:
-        for step in range(saved_global_step + 1, STEPS):
-            if step <= int(4e5):
-                lr = LEARNING_RATE
-            elif step <= int(6e5):
-                lr = 0.5 * LEARNING_RATE
-            elif step <= int(8e5):
-                lr = 0.25 * LEARNING_RATE
-            else:
-                lr = 0.125 * LEARNING_RATE
-            start_time = time.time()
-            if step % CKPT_EVERY == 0:
-                summary, loss_value = sess.run([summaries, loss],
-                                               feed_dict={dataset_handle: test_handle,
-                                                          learning_rate_pl: lr})
-                dev_writer.add_summary(summary, step)
-                duration = time.time() - start_time
-                print('step {:d} - eval loss = {:.3f}, ({:.3f} sec/step)'
-                      .format(step, loss_value, duration))
-                save_model(saver, sess, model_dir, step)
-                last_saved_step = step
-            else:
-                summary, loss_value, _ = sess.run([summaries, loss, optim],
-                                                  feed_dict={dataset_handle: train_handle,
-                                                             learning_rate_pl: lr})
-                train_writer.add_summary(summary, step)
-                if step % 10 == 0:
-                    duration = time.time() - start_time
-                    print('step {:d} - training loss = {:.3f}, ({:.3f} sec/step)'
-                          .format(step, loss_value, duration))
-    except KeyboardInterrupt:
-        # Introduce a line break after ^C is displayed so save message
-        # is on its own line.
-        print()
-    finally:
-        if step > last_saved_step:
+    for step in range(saved_global_step + 1, STEPS):
+        if step <= int(4e5):
+            lr = LEARNING_RATE
+        elif step <= int(6e5):
+            lr = 0.5 * LEARNING_RATE
+        elif step <= int(8e5):
+            lr = 0.25 * LEARNING_RATE
+        else:
+            lr = 0.125 * LEARNING_RATE
+        start_time = time.time()
+        if step % CKPT_EVERY == 0:
+            summary, loss_value = sess.run([summaries, loss],
+                                            feed_dict={dataset_handle: test_handle,
+                                                        learning_rate_pl: lr})
+            dev_writer.add_summary(summary, step)
+            duration = time.time() - start_time
+            print('step {:d} - eval loss = {:.3f}, ({:.3f} sec/step)'
+                    .format(step, loss_value, duration))
             save_model(saver, sess, model_dir, step)
-    sess.close()
+            last_saved_step = step
+        else:
+            summary, loss_value, _ = sess.run([summaries, loss, optim],
+                                                feed_dict={dataset_handle: train_handle,
+                                                            learning_rate_pl: lr})
+            train_writer.add_summary(summary, step)
+            if step % 10 == 0:
+                duration = time.time() - start_time
+                print('step {:d} - training loss = {:.3f}, ({:.3f} sec/step)'
+                        .format(step, loss_value, duration))
+
 
 
 if __name__ == '__main__':
