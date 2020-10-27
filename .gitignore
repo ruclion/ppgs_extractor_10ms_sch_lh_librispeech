@@ -8,4 +8,8 @@ LibriSpeech/alignments
 LibriSpeech/PPGs
 LibriSpeech/MFCCs
 LibriSpeech/wavs_16000_960
+librispeech_log_dir_bp_25/
+librispeech_ckpt_model_dir_bp_25/
+DataBaker-English-PPG/
+LJSpeech-1.1-English-PPG/
 *.txt

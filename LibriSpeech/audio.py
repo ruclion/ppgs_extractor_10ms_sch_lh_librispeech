@@ -8,7 +8,7 @@ hparams = {
     'sample_rate': 16000,#一秒16000个采样点
     'preemphasis': 0.97,
     'n_fft': 400,
-    'hop_length': 80,#80个采样点为帧移动步长 5ms
+    'hop_length': 160,#80个采样点为帧移动步长 5ms
     'win_length': 400,#400个采样点为帧宽度，25ms
     'num_mels': 80,
     'n_mfcc': 13,
@@ -19,7 +19,7 @@ hparams = {
     'min_db': -80.0,  # restrict the dynamic range of log power
     'iterations': 100,  # griffin_lim #iterations
     'silence_db': -28.0,
-    'center': True,#是否将MFCC作为当前帧中间向量的结果。（数个向量作为一帧生成一个mfcc)
+    'center': False,#是否将MFCC作为当前帧中间向量的结果。（数个向量作为一帧生成一个mfcc)
 }
 
 _mel_basis = None

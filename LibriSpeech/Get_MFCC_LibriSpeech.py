@@ -2,7 +2,7 @@ import argparse
 import os
 import numpy as np
 from audio import wav2mfcc_v2, load_wav
-
+from audio import hparams as audio_hparams
 
 hparams = {
     'sample_rate': 16000,
@@ -22,7 +22,7 @@ hparams = {
     'center': False,
 }
 
-
+assert hparams == audio_hparams
 
 wav_dir = 'wavs_16000_960'
 mfcc_dir = 'MFCCs'
