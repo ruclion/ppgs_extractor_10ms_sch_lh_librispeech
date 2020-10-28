@@ -13,3 +13,5 @@ librispeech_ckpt_model_dir_bp_25/
 DataBaker-English-PPG/
 LJSpeech-1.1-English-PPG/
 *.txt
+DataBaker-English-PPG-old/
+LJSpeech-1.1-English-PPG-old/
