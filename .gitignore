@@ -15,3 +15,4 @@ LJSpeech-1.1-English-PPG/
 *.txt
 DataBaker-English-PPG-old/
 LJSpeech-1.1-English-PPG-old/
+librispeech_ckpt_model_dir_v2_v3_backup/

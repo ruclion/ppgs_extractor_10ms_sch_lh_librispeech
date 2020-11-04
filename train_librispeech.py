@@ -18,7 +18,7 @@ if reuse_log:
     STARTED_DATESTRING = '2020-09-21T12-38-11'
 else:
     STARTED_DATESTRING = "{0:%Y-%m-%dT%H-%M-%S}".format(datetime.now())
-MAX_TO_SAVE = 20
+MAX_TO_SAVE = 200
 CKPT_EVERY = 1000
 MFCC_DIM = 39
 PPG_DIM = 347
