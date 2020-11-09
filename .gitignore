@@ -16,3 +16,4 @@ LJSpeech-1.1-English-PPG/
 DataBaker-English-PPG-old/
 LJSpeech-1.1-English-PPG-old/
 librispeech_ckpt_model_dir_v2_v3_backup/
+inference_findA_CE_PPG_log_dir/
