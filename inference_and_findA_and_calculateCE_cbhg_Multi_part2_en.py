@@ -39,13 +39,19 @@ PPG_DIM = 347
 
 # in1
 STARTED_DATESTRING = "{0:%Y-%m-%dT%H-%M-%S}".format(datetime.now())
-meta_path = 'wavs_inference_and_findA_and_calculateCE_list.txt'
+# v2
+# meta_path = 'wavs_inference_and_findA_and_calculateCE_list.txt'
+# v3
+meta_path = 'wavs_inference_and_findA_and_calculateCE_v3_list.txt'
 
 # in2: NN->PPG
 ckpt_path = './librispeech_ckpt_model_dir/librispeechASR.ckpt-113000'
 
 # out
-log_dir = os.path.join('inference_findA_CE_PPG_log_dir', STARTED_DATESTRING)
+# v2
+# log_dir = os.path.join('inference_findA_CE_PPG_log_dir', STARTED_DATESTRING)
+# v3
+log_dir = os.path.join('inference_findA_CE_PPG_v3_log_dir', STARTED_DATESTRING)
 ppg_dir = os.path.join(log_dir, 'ppg')
 rec_wav_dir = os.path.join(log_dir, 'rec_wavs_16000')
 os.makedirs(ppg_dir, exist_ok=True)
