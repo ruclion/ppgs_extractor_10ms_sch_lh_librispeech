@@ -11,11 +11,42 @@ meta_list_fromMFCCs = []
 meta_list_final = []
 meta_list = []
 
-meta_path = 'meta_960.txt'
-train_path = 'train_960.txt'
-test_path = 'test_960.txt'
+meta_path = 'meta_librispeech.txt'
+train_path = 'train_meta_librispeech.txt'
+test_path = 'test_meta_librispeech.txt'
 
 mfcc_dict = {}
+
+PPG_DIM = 347
+
+def onehot(arr, depth, dtype=np.float32):
+    assert len(arr.shape) == 1 #不为1则异常
+    onehots = np.zeros(shape=[len(arr), depth], dtype=dtype)
+    arr=arr.astype(np.int64)
+
+    arr = arr-1  #下标从0开始
+    arr = arr.tolist()
+
+    onehots[np.arange(len(arr)), arr] = 1
+    return onehots
+
+def get_single_data_pair(fname, mfcc_dir, ppg_dir):
+    assert os.path.isdir(mfcc_dir) and os.path.isdir(ppg_dir)
+
+    mfcc_f = os.path.join(os.path.join(os.path.join(mfcc_dir, fname.split('-')[0]),fname.split('-')[1]),fname+'.npy')#fname+'.npy')
+    ppg_f = os.path.join(os.path.join(os.path.join(ppg_dir, fname.split('-')[0]),fname.split('-')[1]),fname+'.npy')#os.path.join(ppg_dir, fname+'.npy')
+
+    try:
+        mfcc = np.load(mfcc_f)
+        ppg = np.load(ppg_f)
+        ppg = onehot(ppg, depth=PPG_DIM)
+        if mfcc.shape[0] != ppg.shape[0]:
+            # print(fname, '---', mfcc.shape[0], ppg.shape[0])
+            return False
+    except:
+        return False
+    return mfcc, ppg
+
 
 def main():
     # ppg
@@ -47,6 +78,9 @@ def main():
 
     for x in tqdm(meta_list_fromPPGs):
         if mfcc_dict.get(x, 0) == 1:
+            if get_single_data_pair(x, mfccs_dir, ppgs_dir) is False:
+                print('have but dim not same', x)
+                continue
             meta_list_final.append(x)
         else:
             print('no:', x)

@@ -18,3 +18,5 @@ LJSpeech-1.1-English-PPG-old/
 librispeech_ckpt_model_dir_v2_v3_backup/
 inference_findA_CE_PPG_log_dir/
 inference_findA_CE_PPG_v3_log_dir/
+librispeech_cpulstm_ckpt_model_dir/
+librispeech_cpulstm_log_dir/
