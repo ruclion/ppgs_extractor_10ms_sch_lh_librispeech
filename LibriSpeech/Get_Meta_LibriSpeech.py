@@ -9,7 +9,6 @@ meta_list_fromPPGs = []
 meta_list_fromMFCCs = []
 
 meta_list_final = []
-meta_list = []
 
 meta_path = 'meta_librispeech.txt'
 train_path = 'train_meta_librispeech.txt'
@@ -41,7 +40,7 @@ def get_single_data_pair(fname, mfcc_dir, ppg_dir):
         ppg = np.load(ppg_f)
         ppg = onehot(ppg, depth=PPG_DIM)
         if mfcc.shape[0] != ppg.shape[0]:
-            # print(fname, '---', mfcc.shape[0], ppg.shape[0])
+            print(fname, '---', mfcc.shape[0], ppg.shape[0])
             return False
     except:
         return False
@@ -73,9 +72,7 @@ def main():
         # break
     print('MFCCs:', len(meta_list_fromMFCCs))
 
-    # 同时存在的才要，alignment很珍贵，不过应当完全重合，所以就不写no到文件中了，print看看就行
-    # 但是结果是：PPGs: 281235，MFCCs: 281241；Final Lists: 281235，所以ppg是mfcc的子集，还好
-
+    # PPG和MFCC均有的才放在final中
     for x in tqdm(meta_list_fromPPGs):
         if mfcc_dict.get(x, 0) == 1:
             if get_single_data_pair(x, mfccs_dir, ppgs_dir) is False:
